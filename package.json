@@ -35,13 +35,18 @@
     "formidable": "^3.2.1",
     "hardhat": "^2.8.2",
     "ipfs-http-client": "^55.0.0",
+    "js-cookie": "^3.0.1",
     "multiparty": "^4.2.2",
     "next": "12.0.8",
     "next-connect": "^0.11.0",
+    "next-redux-wrapper": "^7.0.5",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-hook-form": "^7.24.1",
     "react-infinite-scroll-component": "^6.1.0",
+    "react-redux": "^8.0.2",
+    "redux": "^4.2.0",
+    "redux-thunk": "^2.4.1",
     "web3modal": "^1.9.5"
   },
   "devDependencies": {

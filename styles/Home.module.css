@@ -108,6 +108,13 @@
   margin-left: 0.5rem;
 }
 
+.logoutButton {
+  font-size: 1.25rem;
+  line-height: 1.5;
+  color: white;
+  text-decoration: none;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;

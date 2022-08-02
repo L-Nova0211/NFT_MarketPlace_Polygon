@@ -1,5 +1,6 @@
-
 import { useContext } from 'react'
+import { useSelector } from 'react-redux'
+import { makeStyles } from '@mui/styles'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -21,9 +22,18 @@ const pages = [
   }
 ]
 
-const NavBar = () => {
+const useStyles = makeStyles({
+  logoutButton: {
+    color: 'white',
+    textDecoration: 'none'
+  }
+})
+
+const NavBar = (props) => {
+  const isAuthenticated = useSelector(state => !!state.authentication.token);
   const { account } = useContext(Web3Context)
   const logo = '🖼️'
+  const classes = useStyles()
 
   return (
     <AppBar position="static">
@@ -37,10 +47,21 @@ const NavBar = () => {
           >
             {logo}
           </Typography>
-          <Box sx={{ flexGrow: 1, display: 'flex' }}>
-            {pages.map(({ title, href }) => <NavItem title={title} href={href} key={title}/>)}
-          </Box>
-          {account ? <ConnectedAccountAddress account={account}/> : <ConnectButton />}
+          {isAuthenticated && (
+            <>
+              <Box sx={{ flexGrow: 1, display: 'flex' }}>
+                {pages.map(({ title, href }) => <NavItem title={title} href={href} key={title} privateRoute={true}/>)}
+              </Box>
+              {account ? <ConnectedAccountAddress account={account}/> : <ConnectButton />}
+            </>
+          )}
+          <NavItem title="Login" href="/login" privateRoute={false}></NavItem>
+          <NavItem title="Register" href="/register" privateRoute={false}></NavItem>
+          {isAuthenticated && (
+            <div onClick={props.deauthenticate}>
+              <a className={classes.logoutButton} href='/login'>Log Out</a>
+            </div>
+          )}
         </Toolbar>
       </Container>
     </AppBar>

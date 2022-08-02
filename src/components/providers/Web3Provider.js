@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import Web3Modal from 'web3modal'
 import { ethers } from 'ethers'
 import NFT from '../../../artifacts/contracts/NFT.sol/NFT.json'
@@ -33,9 +34,10 @@ export default function Web3Provider ({ children }) {
   const [marketplaceContract, setMarketplaceContract] = useState(contextDefaultValues.marketplaceContract)
   const [nftContract, setNFTContract] = useState(contextDefaultValues.nftContract)
   const [isReady, setIsReady] = useState(contextDefaultValues.isReady)
+  const isAuthenticated = useSelector(state => !!state.authentication.token);
 
   useEffect(() => {
-    initializeWeb3()
+    isAuthenticated && initializeWeb3()
   }, [])
 
   async function initializeWeb3WithoutSigner () {

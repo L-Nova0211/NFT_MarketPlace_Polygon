@@ -1,5 +1,7 @@
 import { LinearProgress } from '@mui/material'
 import { useContext, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import Router from 'next/router';
 import InstallMetamask from '../src/components/molecules/InstallMetamask'
 import NFTCardList from '../src/components/organisms/NFTCardList'
 import { Web3Context } from '../src/components/providers/Web3Provider'
@@ -8,12 +10,14 @@ import UnsupportedChain from '../src/components/molecules/UnsupportedChain'
 import ConnectWalletMessage from '../src/components/molecules/ConnectWalletMessage'
 
 export default function CreatorDashboard () {
+  const isAuthenticated = useSelector(state => !!state.authentication.token);
   const [nfts, setNfts] = useState([])
   const { account, marketplaceContract, nftContract, isReady, hasWeb3, network } = useContext(Web3Context)
   const [isLoading, setIsLoading] = useState(true)
   const [hasWindowEthereum, setHasWindowEthereum] = useState(false)
 
   useEffect(() => {
+    !isAuthenticated && Router.push('/')
     setHasWindowEthereum(window.ethereum)
   }, [])
 
